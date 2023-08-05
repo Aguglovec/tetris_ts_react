@@ -35,7 +35,7 @@ function Game() {
 				}
 			}
 		},
-		[ stack, currentBrick, gameOver, delay ]
+		[ stack, currentBrick, gameOver, delay, nextBrick ]
 	)
 
 function handleScore () {
@@ -73,7 +73,7 @@ function handleScore () {
 		const clearBrick = brick.map((segment) => {
 			return {x:segment.x - position.x, y:segment.y - position.y}
 		})
-		let rotatedBrick = clearBrick.map((segment) => {return { x:-segment.y+position.x, y:segment.x + position.y }});		
+		const rotatedBrick = clearBrick.map((segment) => {return { x:-segment.y+position.x, y:segment.x + position.y }});		
 		if (checkCollision(rotatedBrick)) return brick
 		else setCurrentBrick (rotatedBrick);
 	}
@@ -101,9 +101,8 @@ function handleScore () {
 			lines[(element.y)] ? lines[element.y] += 1 : lines[element.y] = 1;
 			}
 		
-		for (let key in lines) {
+		for (const key in lines) {
 			if (lines[key] === maxLineLength) {
-				console.log("line " + key + " is full");
 				fullLines.push(Number(key));
 			}
 		}
@@ -143,7 +142,7 @@ function handleScore () {
 			newBrick = currentBrick.map((segment) => {return { x:segment.x, y:segment.y + direction.y }});
 		}
 		// botton collision check
-		let nextMovePosition = newBrick.map((segment) => {return { x:segment.x, y:segment.y + direction.y }});
+		const nextMovePosition = newBrick.map((segment) => {return { x:segment.x, y:segment.y + direction.y }});
 		if (checkCollision(nextMovePosition)) {
 
 			const newStack = [...stack]; 
